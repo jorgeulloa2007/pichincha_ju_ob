@@ -1,0 +1,1207 @@
+{
+	"info": {
+		"_postman_id": "3ecb6c60-319a-40c0-b140-b1d33d2b1f45",
+		"name": "creditoautomovilistico",
+		"description": "Registro de solicitudes de crédito\n\nContact Support:\n Name: Banco Pichincha\n Email: devops@pichincha.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21762438"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "{identificacion}",
+					"item": [
+						{
+							"name": "Get Cliente by identificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/:identificacion",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										":identificacion"
+									],
+									"variable": [
+										{
+											"key": "identificacion",
+											"value": "est commodo aliquip",
+											"description": "(Required) # of identificacion"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Clientes/:identificacion",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Clientes",
+												":identificacion"
+											],
+											"variable": [
+												{
+													"key": "identificacion",
+													"value": "est commodo aliquip",
+													"description": "(Required) # of identificacion"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Clientes/:identificacion/delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/:identificacion/delete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										":identificacion",
+										"delete"
+									],
+									"variable": [
+										{
+											"key": "identificacion",
+											"value": "est commodo aliquip",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Clientes/:identificacion/delete",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Clientes",
+												":identificacion",
+												"delete"
+											],
+											"variable": [
+												{
+													"key": "identificacion",
+													"value": "est commodo aliquip",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Creates a new Cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Clientes/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Clientes",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Returns the newly created item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										"add"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "If the item is null",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										"add"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Clientes/update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Clientes/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Clientes",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/update",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Clientes/solicitud",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cuotas\": -45769277.76217232,\n  \"entrada\": 85274639.4448649,\n  \"estado\": 2,\n  \"fechaElaboracion\": \"1999-01-22T22:16:57.082Z\",\n  \"idCliente\": \"reprehenderit mollit sed non\",\n  \"idEjecutivo\": \"sint Duis\",\n  \"mesesPlazo\": -10307791,\n  \"patio\": \"adipisicing minim Lorem\",\n  \"placaVehiculo\": \"cupidatat mollit\",\n  \"observacion\": \"qui et\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Clientes/solicitud",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Clientes",
+								"solicitud"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cuotas\": -45769277.76217232,\n  \"entrada\": 85274639.4448649,\n  \"estado\": 2,\n  \"fechaElaboracion\": \"1999-01-22T22:16:57.082Z\",\n  \"idCliente\": \"reprehenderit mollit sed non\",\n  \"idEjecutivo\": \"sint Duis\",\n  \"mesesPlazo\": -10307791,\n  \"patio\": \"adipisicing minim Lorem\",\n  \"placaVehiculo\": \"cupidatat mollit\",\n  \"observacion\": \"qui et\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Clientes/solicitud",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Clientes",
+										"solicitud"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Patios",
+			"item": [
+				{
+					"name": "{identificacion}",
+					"item": [
+						{
+							"name": "Get Patio by identificacion",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Patios/:identificacion",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										":identificacion"
+									],
+									"variable": [
+										{
+											"key": "identificacion",
+											"value": "est commodo aliquip",
+											"description": "(Required) # of identificacion"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Patios/:identificacion",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Patios",
+												":identificacion"
+											],
+											"variable": [
+												{
+													"key": "identificacion",
+													"value": "est commodo aliquip",
+													"description": "(Required) # of identificacion"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Patios/:identificacion/delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Patios/:identificacion/delete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										":identificacion",
+										"delete"
+									],
+									"variable": [
+										{
+											"key": "identificacion",
+											"value": "est commodo aliquip",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Patios/:identificacion/delete",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Patios",
+												":identificacion",
+												"delete"
+											],
+											"variable": [
+												{
+													"key": "identificacion",
+													"value": "est commodo aliquip",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Creates a new Patio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Patios/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Patios",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Patios/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Returns the newly created item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Patios/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										"add"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "If the item is null",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Patios/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										"add"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Patios/update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Patios/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Patios",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"direccion\": \"sed nulla laboris fugiat\",\n  \"nombre\": \"velit nulla aliqua aliquip\",\n  \"numeroPuntoVenta\": 49454506,\n  \"telefono\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Patios/update",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Patios",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Vehiculos",
+			"item": [
+				{
+					"name": "{placa}",
+					"item": [
+						{
+							"name": "Get Vehiculo by placa",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/:placa",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										":placa"
+									],
+									"variable": [
+										{
+											"key": "placa",
+											"value": "est commodo aliquip",
+											"description": "(Required) # of placa"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Vehiculos/:placa",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Vehiculos",
+												":placa"
+											],
+											"variable": [
+												{
+													"key": "placa",
+													"value": "est commodo aliquip",
+													"description": "(Required) # of placa"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Vehiculos/:placa/delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/:placa/delete",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										":placa",
+										"delete"
+									],
+									"variable": [
+										{
+											"key": "placa",
+											"value": "est commodo aliquip",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Vehiculos/:placa/delete",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Vehiculos",
+												":placa",
+												"delete"
+											],
+											"variable": [
+												{
+													"key": "placa",
+													"value": "est commodo aliquip",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Get Vehiculo by multiple fields search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Vehiculos/get?Marca=est commodo aliquip&Modelo=est commodo aliquip&Year=-42659420",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Vehiculos",
+								"get"
+							],
+							"query": [
+								{
+									"key": "Marca",
+									"value": "est commodo aliquip"
+								},
+								{
+									"key": "Modelo",
+									"value": "est commodo aliquip"
+								},
+								{
+									"key": "Year",
+									"value": "-42659420"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/get?Marca=est commodo aliquip&Modelo=est commodo aliquip&Year=-42659420",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										"get"
+									],
+									"query": [
+										{
+											"key": "Marca",
+											"value": "est commodo aliquip"
+										},
+										{
+											"key": "Modelo",
+											"value": "est commodo aliquip"
+										},
+										{
+											"key": "Year",
+											"value": "-42659420"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Creates a new vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Vehiculos/add",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Vehiculos",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Returns the newly created item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										"add"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "If the item is null",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/add",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										"add"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "/Vehiculos/update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Vehiculos/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Vehiculos",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Vehiculos/update",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Vehiculos",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}

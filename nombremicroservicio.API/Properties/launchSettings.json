@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64393",
+      "applicationUrl": "http://localhost:5000",
       "sslPort": 0
     }
   },
@@ -16,7 +16,7 @@
       },
       "nativeDebugging": false
     },
-    "nombremicroservicio.API": {
+    "creditoautomovilistico.API": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -1,0 +1,21 @@
+Identificacion,Nombres,Apellidos,Direccion,Telefono,Edad,FechaNacimiento,EstadoCivil,IdentificacionConyuge,NombreConyuge,SujetoDeCredito
+1701010101,Juan1,Perez1,Direccion1,253111,44,,2,1801010101,Juana1 Castro,0
+1701010102,Juan2,Perez2,Direccion2,2531112,55,,2,1801010102,Juana2 Castro,1
+1701010103,Juan3,Perez3,Direccion3,253113,66,,2,1801010103,Juana3 Castro,1
+1701010104,Juan4,Perez4,Direccion4,253114,22,,2,1801010104,Juana4 Castro,0
+1701010105,Juan5,Perez5,Direccion5,253115,33,,2,1801010105,Juana5 Castro,1
+1701010106,Juan6,Perez6,Direccion6,253116,44,,2,1801010106,Juana6 Castro,1
+1701010107,Juan7,Perez7,Direccion7,253117,55,,2,1801010107,Juana7 Castro,1
+1701010108,Juan8,Perez8,Direccion8,253118,22,,2,1801010108,Juana8 Castro,1
+1701010109,Juan9,Perez9,Direccion9,253119,77,,2,1801010109,Juana9 Castro,1
+2701010100,Juan0,Perez0,Direccion0,253110,22,,2,1801010100,Juana0 Castro,0
+2701010101,Juan1,Perez1,Direccion1,253111,55,,2,1801010101,Juana1 Castro,1
+2701010102,Juan2,Perez2,Direccion2,253112,44,,2,1801010102,Juana2 Castro,1
+2701010103,Juan3,Perez3,Direccion3,253113,33,,2,1801010103,Juana3 Castro,1
+2701010104,Juan4,Perez4,Direccion4,253114,66,,1,,,0
+2701010105,Juan5,Perez5,Direccion5,253115,22,,1,,,1
+2701010106,Juan6,Perez6,Direccion6,253116,33,,1,,,1
+2701010107,Juan7,Perez7,Direccion7,253117,34,,1,,,1
+2701010108,Juan8,Perez8,Direccion8,253118,35,,1,,,0
+2701010109,Juan9,Perez9,Direccion9,253119,36,,1,,,1
+3701010100,Juan0,Perez0,Direccion0,253110,37,,1,,,1

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -10,11 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="MethodBoundaryAspect.Fody" Version="2.0.139" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.Domain\nombremicroservicio.Domain.csproj" />
+    <ProjectReference Include="..\nombremicroservicio.Domain\creditoautomovilistico.Domain.csproj" />
+    <ProjectReference Include="..\nombremicroservicio.Infrastructure\creditoautomovilistico.Infrastructure.csproj" />
   </ItemGroup>
+  
 
 </Project>

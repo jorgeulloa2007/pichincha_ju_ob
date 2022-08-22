@@ -16,6 +16,13 @@ using OpenTelemetry.Trace;
 using OpenTelemetry.Logs;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
+using Google.Protobuf.WellKnownTypes;
+using creditoautomovilistico.Infrastructure.Context;
+using creditoautomovilistico.Repository.Repositories;
+using nombremicroservicio.Domain.Interfaces;
+using creditoautomovilistico.Domain.Interfaces;
+using creditoautomovilistico.API.Mapper;
+using creditoautomovilistico.Domain.Services;
 
 namespace nombremicroservicio.API
 {
@@ -62,11 +69,14 @@ namespace nombremicroservicio.API
 
             #region INFRASTRUCTURE
 
+            services.AddDbContext<DatabaseContext>();
 
             #endregion INFRASTRUCTURE
 
             #region COMPATIBILITY
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             #endregion COMPATIBILITY
 
             #region HANDLING API VERSIONS
@@ -87,8 +97,8 @@ namespace nombremicroservicio.API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "nombremicroservicio",
-                    Description = "Una descripcion del microservicio",
+                    Title = "creditoautomovilistico",
+                    Description = "Registro de solicitudes de crédito",
                     Contact = new OpenApiContact
                     {
                         Name = "Banco Pichincha",
@@ -103,28 +113,42 @@ namespace nombremicroservicio.API
             });
 
             #endregion Swagger
+
+            services.AddAutoMapper(
+                                    typeof(APIMappingProfile),
+                                    typeof(RepositoryMappingProfile)
+                                   );
+
+            services.AddScoped<IPatioRepository, PatioRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IVehiculoRepository, VehiculoRepository>();
+
+
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IVehiculoService, VehiculoService>();
+            services.AddScoped<IPatioService, PatioService>();
         }
 
 
-
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DatabaseContext dataContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
             #region SwaggerUI
             app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "nombremicroservicio API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "creditoautomovilistico API");
                 c.RoutePrefix = "swagger";
                 c.InjectStylesheet("/swagger/custom.css");
             });
             #endregion Swagger
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -135,6 +159,8 @@ namespace nombremicroservicio.API
             {
                 endpoints.MapControllers();
             });
+
+            dataContext.Seed();
         }
     }
 }
