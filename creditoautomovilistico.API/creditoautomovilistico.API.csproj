@@ -26,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.Domain\creditoautomovilistico.Domain.csproj" />
-    <ProjectReference Include="..\nombremicroservicio.Entities\creditoautomovilistico.Entities.csproj" />
-    <ProjectReference Include="..\nombremicroservicio.Infrastructure\creditoautomovilistico.Infrastructure.csproj" />
-    <ProjectReference Include="..\nombremicroservicio.Repository\creditoautomovilistico.Repository.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Domain\creditoautomovilistico.Domain.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Entities\creditoautomovilistico.Entities.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Infrastructure\creditoautomovilistico.Infrastructure.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Repository\creditoautomovilistico.Repository.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.Entities\creditoautomovilistico.Entities.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Entities\creditoautomovilistico.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

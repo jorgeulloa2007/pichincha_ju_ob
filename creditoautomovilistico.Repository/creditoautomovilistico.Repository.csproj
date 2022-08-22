@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.Domain\creditoautomovilistico.Domain.csproj" />
-    <ProjectReference Include="..\nombremicroservicio.Infrastructure\creditoautomovilistico.Infrastructure.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Domain\creditoautomovilistico.Domain.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Infrastructure\creditoautomovilistico.Infrastructure.csproj" />
   </ItemGroup>
   
 

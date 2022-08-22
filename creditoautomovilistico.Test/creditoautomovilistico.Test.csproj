@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.API\creditoautomovilistico.API.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.API\creditoautomovilistico.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

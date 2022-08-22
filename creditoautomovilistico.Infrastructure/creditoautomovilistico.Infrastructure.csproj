@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\nombremicroservicio.Domain\creditoautomovilistico.Domain.csproj" />
+    <ProjectReference Include="..\creditoautomovilistico.Domain\creditoautomovilistico.Domain.csproj" />
   </ItemGroup>
 
 </Project>
