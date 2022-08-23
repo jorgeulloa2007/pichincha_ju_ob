@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,14 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Logs;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
-using Google.Protobuf.WellKnownTypes;
 using creditoautomovilistico.Infrastructure.Context;
 using creditoautomovilistico.Repository.Repositories;
 using nombremicroservicio.Domain.Interfaces;
@@ -122,7 +117,6 @@ namespace nombremicroservicio.API
             services.AddScoped<IPatioRepository, PatioRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IVehiculoRepository, VehiculoRepository>();
-
 
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IVehiculoService, VehiculoService>();

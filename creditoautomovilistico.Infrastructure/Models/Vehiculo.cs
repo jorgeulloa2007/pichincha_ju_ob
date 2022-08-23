@@ -29,5 +29,8 @@ namespace creditoautomovilistico.Infrastructure.Models
 
         [Required]
         public int MarcaId { get; set; }
+
+        [Required]
+        public int Year { get; set; }
     }
 }

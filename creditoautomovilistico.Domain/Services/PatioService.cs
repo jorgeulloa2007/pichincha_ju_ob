@@ -39,6 +39,13 @@ namespace creditoautomovilistico.Domain.Services
 
         public async Task<Patio> PutPatio(Patio patio)
         {
+            var patioToUpdate = await GetPatio(patio.Nombre);
+
+            if (patioToUpdate == null)
+                throw new ApplicationException("No se puede ejecutar la operación.");
+
+            patio.Id = patioToUpdate.Id;
+
             return await _repo.EditPatio(patio);
         }
     }

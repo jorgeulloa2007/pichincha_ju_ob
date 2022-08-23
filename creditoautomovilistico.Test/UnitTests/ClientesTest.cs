@@ -19,6 +19,8 @@ namespace creditoautomovilistico.Test.UnitTests
     {
         private ClientesController _ClientesController;
         private IClienteRepository _repo;
+        private IPatioRepository _repoPatio;
+        private IVehiculoRepository _repoVeh;
         private IClienteService _service;
         private ILogger<ClientesController> _logger;
 
@@ -32,7 +34,9 @@ namespace creditoautomovilistico.Test.UnitTests
         {
             _logger = Substitute.For<ILogger<ClientesController>>();
             _repo = Substitute.For<IClienteRepository>();
-            _service = new ClienteService(_repo);
+            _repoPatio = Substitute.For<IPatioRepository>();
+            _repoVeh = Substitute.For<IVehiculoRepository>();
+            _service = new ClienteService(_repo, _repoPatio, _repoVeh);
             _ClientesController = new ClientesController(_service, _logger, Mapper);
         }
 
@@ -42,7 +46,7 @@ namespace creditoautomovilistico.Test.UnitTests
             string idCliente = "12345678901";
 
             _repo.GetClienteByIdentificacion(idCliente)
-                .Returns(Mapper.Map<Entities.Cliente>(ClientesMocks.GetMockedClienteDbo(idCliente)));
+                .Returns(Mapper.Map<Cliente>(ClientesMocks.GetMockedClienteDbo(idCliente)));
 
             var result = (OkObjectResult)_ClientesController.GetCliente(idCliente);
 
@@ -82,8 +86,12 @@ namespace creditoautomovilistico.Test.UnitTests
             string idCliente = "12345678901";
 
             var response = ClientesMocks.GetMockedClienteDbo(idCliente);
-            _repo.EditCliente(Arg.Any<Entities.Cliente>())
-                .Returns(Mapper.Map<Entities.Cliente>(response));
+
+            _repo.EditCliente(Arg.Any<Cliente>())
+                .Returns(Mapper.Map<Cliente>(response));
+
+            _repo.GetClienteByIdentificacion(idCliente)
+                .Returns(Mapper.Map<Cliente>(response));
 
             var model = ClientesMocks.GetMockedClientePayload(idCliente);
 
@@ -145,21 +153,29 @@ namespace creditoautomovilistico.Test.UnitTests
 
             Assert.IsNotNull(result);
         }
-
  
         [Test]
         public async Task Clientes_GenerarSolicitudCredito_Succeed()
         {
             string idCliente = "12345678901";
+            string idPatio = "Patio1";
+            string idVeh = "123456";
+            string idEjecutivo = "1234567890";
 
             _repo.GetClienteByIdentificacion(idCliente)
                 .Returns(Mapper.Map<Cliente>(ClientesMocks.GetMockedClienteDbo(idCliente)));
 
-            var payload = ClientesMocks.GetMockedSolicitudCreditoPayload(idCliente);
-            var response = ClientesMocks.GetMockedSolicitudCreditoResponse(idCliente);
+            _repoPatio.GetPatioByIdentificacion(Arg.Any<string>())
+                .Returns(Mapper.Map<Patio>(PatiosMocks.GetMockedPatioDbo(idPatio, idEjecutivo)));
+
+            _repoVeh.GetVehiculoByPlaca(Arg.Any<string>())
+                .Returns(Mapper.Map<Vehiculo>(VehiculosMocks.GetMockedVehiculoDbo(idVeh))); ;
+
+            var payload = ClientesMocks.GetMockedSolicitudCreditoPayload(idCliente, idEjecutivo, idPatio, idVeh);
+            var response = ClientesMocks.GetMockedSolicitudCreditoResponse(idCliente, idPatio, idVeh, idEjecutivo);
 
             _repo.GenerarSolicitud(Arg.Any<SolicitudCredito>())
-                .Returns(Mapper.Map<SolicitudCredito>(ClientesMocks.GetMockedSolicitudCreditoDbo(idCliente)));
+                .Returns(Mapper.Map<SolicitudCredito>(ClientesMocks.GetMockedSolicitudCreditoDbo(idCliente, idPatio, idVeh, idEjecutivo)));
 
             var result = await _ClientesController.GenerateSolicitudCredito(payload) as CreatedAtActionResult;
 

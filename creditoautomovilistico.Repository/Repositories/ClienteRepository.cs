@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using creditoautomovilistico.Entities;
 using creditoautomovilistico.Infrastructure.Context;
-//using creditoautomovilistico.Infrastructure.Models;
-//using creditoautomovilistico.Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using nombremicroservicio.Domain.Interfaces;
 using System;
@@ -24,27 +22,27 @@ namespace creditoautomovilistico.Repository.Repositories
 
         public async Task<Cliente> GetClienteByIdentificacion(string identificacion)
         {
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                return _mapper.Map<Cliente>(await _context.Clientes.FirstOrDefaultAsync(c => c.Identificacion == identificacion));
+                var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.Identificacion == identificacion);
+
+                if (cliente != null)
+                {
+                    _context.Entry(cliente).Collection(c => c.Solicitudes).Load();
+
+                    _context.Entry(cliente).State = EntityState.Detached;
+                }
+
+                return _mapper.Map<Cliente>(cliente);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<Cliente> AddCliente(Cliente cliente)
         {
-            if (cliente == null)
-                throw new ArgumentNullException(
-                                "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
                 var clienteToAdd = _mapper.Map<Infrastructure.Models.Cliente>(cliente);
@@ -57,38 +55,29 @@ namespace creditoautomovilistico.Repository.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<Cliente> EditCliente(Cliente cliente)
         {
-            if (cliente == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
             try
             {
                 var clienteUpdated = _context.Update(_mapper.Map<Infrastructure.Models.Cliente>(cliente));
 
                 await _context.SaveChangesAsync();
 
-                return _mapper.Map<Cliente>(clienteUpdated);
+                return _mapper.Map<Cliente>(clienteUpdated.Entity);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<bool> RemoveCliente(string identificacion)
         {
             int successfullyRemoved = 0;
-
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
 
             var cliente = await _context.Clientes.Where(c => c.Identificacion == identificacion).FirstOrDefaultAsync();
 
@@ -100,8 +89,7 @@ namespace creditoautomovilistico.Repository.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(
-                                    "Error accediendo a datos.", ex);
+                    throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
                 }
 
             return successfullyRemoved > 0;
@@ -110,77 +98,56 @@ namespace creditoautomovilistico.Repository.Repositories
 
         public async Task<bool> HaveSolicitudesAsociadas(string identificacion)
         {
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                return await _context.Solicitudes.AnyAsync(s => s.Cliente.Identificacion == identificacion);
+                return await _context.Solicitudes.AsNoTracking().AnyAsync(s => s.Cliente.Identificacion == identificacion);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
-            }
-        }
-
-        public async Task<Cliente> GetClienteById(int? id)
-        {
-            if (id == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
-            try
-            {
-                return _mapper.Map<Cliente>(await _context.Clientes.FirstOrDefaultAsync(c => c.Id == id));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<SolicitudCredito> GenerarSolicitud(SolicitudCredito solicitud)
         {
-            if (solicitud == null)
-                throw new ArgumentNullException(
-                                "Error de datos: Datos a actualizar no válidos.");
-
-            var patio = _context.Patios.Where(p => p.Nombre == solicitud.Patio.Nombre).FirstOrDefault();
-
-            if (patio.Ejecutivos.FirstOrDefault(e => e.Identificacion == solicitud.Ejecutivo.Identificacion) == null)
-                throw new ArgumentException("Ejecutivo no pertenece al Patio donde se registra la solicitud.");
-
-
-            var solicitudDB = new SolicitudCredito();
             try
             {
                 using (var dbContextTransaction = _context.Database.BeginTransaction())
                 {
-                    solicitudDB = _mapper.Map<SolicitudCredito>(
-                    _context.Solicitudes.Add(_mapper.Map<Infrastructure.Models.SolicitudCredito>(solicitud))
-                    );
+                    var solDb = _mapper.Map<Infrastructure.Models.SolicitudCredito>(solicitud);
+
+                    solDb.Patio.Ejecutivos.Clear();
+
+                    var solicitudSaved = await _context.Solicitudes.AddAsync(solDb);
+
+                    _context.Entry(solDb.Patio).State = EntityState.Detached;
+                    _context.Entry(solDb.Cliente).State = EntityState.Detached;
+                    _context.Entry(solDb.Vehiculo).State = EntityState.Detached;
+                    _context.Entry(solDb.Ejecutivo).State = EntityState.Detached;
+
+                    _context.Entry(solicitudSaved.Entity).State = EntityState.Added;
 
                     var clientePatio = new Infrastructure.Models.ClientePatio()
                     {
-                        FechaAsignacion = DateTime.Now,
-                        Cliente = _mapper.Map<Infrastructure.Models.Cliente>(solicitud.Cliente)
+                        FechaAsignacion = DateTime.Now.ToUniversalTime(),
+                        Cliente = solDb.Cliente,
+                        PatioId = solDb.Patio.Id
                     };
 
-                    patio.Clientes.Add(clientePatio);
+                    solDb.Patio.Clientes.Add(clientePatio);
+
+                    _context.Entry(clientePatio).State = EntityState.Added;
 
                     await _context.SaveChangesAsync();
 
                     dbContextTransaction.Commit();
+
+                    return _mapper.Map<SolicitudCredito>(solicitudSaved.Entity);
                 }
-                return solicitudDB;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
     }

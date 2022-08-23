@@ -10,7 +10,7 @@ namespace creditoautomovilistico.API.Models
 
         public ClienteResponseModel Cliente { get; set; }
 
-        public string IdPatio { get; set; }
+        public PatioResponseModel Patio { get; set; }
 
         public VehiculoResponseModel Vehiculo { get; set; }
 

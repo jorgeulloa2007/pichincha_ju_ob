@@ -23,6 +23,8 @@ namespace creditoautomovilistico.Entities
 
         public decimal Avaluo { get; set; }
 
-        public int MarcaId { get; set; }
+        public string MarcaAuto { get; set; }
+
+        public int Year { get; set; }
     }
 }

@@ -56,15 +56,22 @@ namespace creditoautomovilistico.Test.UnitTests
         public async Task Vehiculos_PostVehiculo_Succeed()
         {
             string placaVehiculo = "12345678";
+            string marca = "KIA";
+
+            var response = VehiculosMocks.GetMockedVehiculoDbo(placaVehiculo);
+            var marcaResponse = VehiculosMocks.GetMockedMarca(marca);
 
             _repo.GetVehiculoByPlaca(Arg.Any<string>())
                 .Returns((Entities.Vehiculo)null);
 
-            var response = VehiculosMocks.GetMockedVehiculoDbo(placaVehiculo);
-            _repo.AddVehiculo(Arg.Any<Entities.Vehiculo>())
+            _repo.AddVehiculo(Arg.Any<Entities.Vehiculo>(), Arg.Any<Entities.Marca>())
                 .Returns(Mapper.Map<Entities.Vehiculo>(response));
 
             var model = VehiculosMocks.GetMockedVehiculoPayload(placaVehiculo);
+
+            _repo.GetMarcaVehByName(marca)
+                .Returns(Mapper.Map<Entities.Marca>(marcaResponse));
+
             var result = await _vehiculosController.PostVehiculo(model) as CreatedAtActionResult;
 
             Assert.IsNotNull(result);
@@ -79,10 +86,20 @@ namespace creditoautomovilistico.Test.UnitTests
         public void Vehiculos_PutVehiculo_Succeed()
         {
             string placaVehiculo = "12345678";
+            string marca = "KIA";
 
-            var response = VehiculosMocks.GetMockedVehiculoDbo(placaVehiculo);
-            _repo.EditVehiculo(Arg.Any<Entities.Vehiculo>())
-                .Returns(Mapper.Map<Entities.Vehiculo>(response));
+            var vehResponse = VehiculosMocks.GetMockedVehiculoDbo(placaVehiculo);
+            var marcaResponse = VehiculosMocks.GetMockedMarca(marca);
+
+
+            _repo.EditVehiculo(Arg.Any<Entities.Vehiculo>(), Arg.Any<Entities.Marca>())
+                .Returns(Mapper.Map<Entities.Vehiculo>(vehResponse));
+
+            _repo.GetVehiculoByPlaca(placaVehiculo)
+                .Returns(Mapper.Map<Entities.Vehiculo>(vehResponse));
+
+            _repo.GetMarcaVehByName(marca)
+                .Returns(Mapper.Map<Entities.Marca>(marcaResponse));
 
             var model = VehiculosMocks.GetMockedVehiculoPayload(placaVehiculo);
 
@@ -136,7 +153,7 @@ namespace creditoautomovilistico.Test.UnitTests
             _repo.GetVehiculoByPlaca(Arg.Any<string>())
                 .Returns(Mapper.Map<Entities.Vehiculo>(response));
 
-            _repo.AddVehiculo(Arg.Any<Entities.Vehiculo>())
+            _repo.AddVehiculo(Arg.Any<Entities.Vehiculo>(), Arg.Any<Entities.Marca>())
                 .Returns(Mapper.Map<Entities.Vehiculo>(response));
 
 

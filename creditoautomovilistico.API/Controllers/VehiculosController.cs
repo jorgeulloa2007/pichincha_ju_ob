@@ -41,11 +41,16 @@ namespace creditoautomovilistico.API.Controllers
         [Route("get")]
         public IActionResult GetVehiculoByMutipleFields([FromQuery] VehiculoSearchModel payload)
         {
-
-            return Ok(Mapper.Map<List<VehiculoResponseModel>>(
-                Service.GetVehiculoByMutipleFields(Mapper.Map<Domain.Models.VehiculoSearchModel> (payload)).Result)
-                );
-
+            try
+            {
+                return Ok(Mapper.Map<List<VehiculoResponseModel>>(
+                    Service.GetVehiculoByMutipleFields(Mapper.Map<Domain.Models.VehiculoSearchModel>(payload)).Result)
+                    );
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
         #endregion GET METHODS
 
@@ -68,9 +73,15 @@ namespace creditoautomovilistico.API.Controllers
 
                 return CreatedAtAction(nameof(GetVehiculo), new { placa = vehiculo.Placa }, vehiculo);
             }
-            catch (ApplicationException ex)
+            catch (Exception ex)
             {
-                return Conflict(ex);
+                if (ex.GetType().Name == "InvalidOperationException")
+                    return Conflict(ex.Message);
+
+                if (ex.GetType().Name == "ArgumentOutOfRangeException")
+                    return BadRequest(ex.Message);
+
+                return Problem(ex.Message);
             }
         }
 
@@ -78,17 +89,37 @@ namespace creditoautomovilistico.API.Controllers
 
         #region  PUT METHODS
 
+        /// <summary>
+        /// Updates vehicle data in DB
+        /// </summary>
+        /// <param name="payload">model with vehicle data to update</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("update")]
         public IActionResult PutVehiculo([FromBody] VehiculoPayloadModel payload)
         {
-            return Ok(Mapper.Map<VehiculoResponseModel>(
-                Service.PutVehiculo(Mapper.Map<Entities.Vehiculo>(payload)).Result)
-                );
+            try
+            {
+                return Ok(Mapper.Map<VehiculoResponseModel>(
+                    Service.PutVehiculo(Mapper.Map<Entities.Vehiculo>(payload)).Result)
+                    );
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.GetType().Name == "InvalidOperationException")
+                    return BadRequest(ex.Message);
+
+                 return Problem(ex.Message);
+            }
         }
 
         #endregion PUT METHODS
 
+        /// <summary>
+        /// Removes vehicle from DB
+        /// </summary>
+        /// <param name="placa">vehicle´s placa</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{placa}/delete")]
         public IActionResult DeleteVehiculo(string placa)

@@ -16,6 +16,6 @@ namespace creditoautomovilistico.API.Models
 
         public List<EjecutivoResponseModel> Ejecutivos { get; set; }
 
-        public List<ClientePatioRespondeModel> Clientes { get; set; }
+        public List<ClientePatioResponseModel> Clientes { get; set; }
     }
 }

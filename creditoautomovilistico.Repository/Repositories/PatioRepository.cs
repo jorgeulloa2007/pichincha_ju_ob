@@ -22,27 +22,29 @@ namespace creditoautomovilistico.Repository.Repositories
 
         public async Task<Patio> GetPatioByIdentificacion(string identificacion)
         {
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                return _mapper.Map<Patio>(await _context.Patios.FirstOrDefaultAsync(p => p.Nombre == identificacion));
+                var patio = await _context.Patios.FirstOrDefaultAsync(p => p.Nombre == identificacion);
+
+                if (patio != null)
+                {
+                    await _context.Entry(patio).Collection(c => c.Clientes).LoadAsync();
+                    await _context.Entry(patio).Collection(c => c.Ejecutivos).LoadAsync();
+                    _context.Entry(patio).State = EntityState.Detached;
+                   // _context.Entry(patio.Ejecutivos).State = EntityState.Detached;
+                }
+
+                return _mapper.Map<Patio>(patio);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
+                throw new DbUpdateException(
                                 "Error accediendo a datos.", ex);
             }
         }
 
         public async Task<Patio> AddPatio(Patio patio)
         {
-            if (patio == null)
-                throw new ArgumentNullException(
-                                "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
                 var patioToAdd = _mapper.Map<Infrastructure.Models.Patio>(patio);
@@ -55,21 +57,18 @@ namespace creditoautomovilistico.Repository.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
+                throw new DbUpdateException(
                                 "Error accediendo a datos.", ex);
             }
         }
 
         public async Task<Patio> EditPatio(Patio patio)
         {
-            if (patio == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
             try
             {
                 var patioToUpd = _mapper.Map<Infrastructure.Models.Patio>(patio);
 
-                var patioUpdated = _context.Update<Infrastructure.Models.Patio>(patioToUpd);
+                var patioUpdated = _context.Update(patioToUpd);
 
                 await _context.SaveChangesAsync();
 
@@ -77,7 +76,7 @@ namespace creditoautomovilistico.Repository.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
+                throw new DbUpdateException(
                                 "Error accediendo a datos.", ex);
             }
         }
@@ -86,11 +85,7 @@ namespace creditoautomovilistico.Repository.Repositories
         {
             int successfullyRemoved = 0;
 
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
-            var patio = await _context.Patios.Where(p => p.Nombre == identificacion).FirstOrDefaultAsync();
+            var patio = await _context.Patios.AsNoTracking().Where(p => p.Nombre == identificacion).FirstOrDefaultAsync();
 
             if (patio != null)
                 try
@@ -101,7 +96,7 @@ namespace creditoautomovilistico.Repository.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(
+                    throw new DbUpdateException(
                                     "Error accediendo a datos.", ex);
                 }
 
@@ -110,13 +105,9 @@ namespace creditoautomovilistico.Repository.Repositories
 
         public async Task<bool> HaveAssociatedInfo(string identificacion)
         {
-            if (string.IsNullOrEmpty(identificacion))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                var patio = await _context.Patios.FirstOrDefaultAsync(p => p.Nombre == identificacion);
+                var patio = await _context.Patios.AsNoTracking().FirstOrDefaultAsync(p => p.Nombre == identificacion);
 
                 if (patio == null)
                     return false;
@@ -126,7 +117,7 @@ namespace creditoautomovilistico.Repository.Repositories
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
+                throw new DbUpdateException(
                                 "Error accediendo a datos.", ex);
             }
 

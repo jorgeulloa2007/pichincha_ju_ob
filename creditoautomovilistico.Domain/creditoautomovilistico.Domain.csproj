@@ -19,8 +19,4 @@
     <ProjectReference Include="..\creditoautomovilistico.Entities\creditoautomovilistico.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapper\" />
-  </ItemGroup>
-
 </Project>

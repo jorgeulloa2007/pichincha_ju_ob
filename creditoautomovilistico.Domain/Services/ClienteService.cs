@@ -10,10 +10,14 @@ namespace creditoautomovilistico.Domain.Services
     public class ClienteService : IClienteService
     {
         protected IClienteRepository _repo;
+        protected IPatioRepository _patioRepo;
+        protected IVehiculoRepository _vehRepo;
 
-        public ClienteService(IClienteRepository repo)
+        public ClienteService(IClienteRepository repo, IPatioRepository patioRepo, IVehiculoRepository vehRepo)
         {
             _repo = repo;
+            _patioRepo = patioRepo;
+            _vehRepo = vehRepo;
         }
 
         private async Task<bool> GetSolicitudesAsociadas(string identificacion)
@@ -46,6 +50,13 @@ namespace creditoautomovilistico.Domain.Services
 
         public async Task<Cliente> PutCliente(Cliente cliente)
         {
+            var clienteToUpdate = await GetCliente(cliente.Identificacion);
+
+            if (clienteToUpdate == null)
+                throw new ApplicationException("No se puede ejecutar la operación.");
+
+            cliente.Id = clienteToUpdate.Id;
+
             return await _repo.EditCliente(cliente);
         }
 
@@ -54,13 +65,33 @@ namespace creditoautomovilistico.Domain.Services
             var cliente = await _repo.GetClienteByIdentificacion(solicitudCredito.Cliente.Identificacion);
             
             if (cliente == null)
-                throw new ArgumentException("Cliente  no válido");
+                throw new InvalidOperationException("Cliente  no válido");
 
             if (cliente.Solicitudes.Any(s => s.FechaElaboracion.Date == DateTime.Now.Date 
                                     && s.Estado != Entities.Enumerations.TipoEstadoSolicitud.Cancelada))
-                throw new ArgumentException("Cliente ya tiene una solicitud realizada el día de hoy.");
+                throw new InvalidOperationException("Cliente ya tiene una solicitud realizada el día de hoy.");
+
+            var patio = await _patioRepo.GetPatioByIdentificacion(solicitudCredito.Patio.Nombre);
+
+            if (patio == null)
+                throw new InvalidOperationException("Patio no válido.");
+
+            var ejecutivo = patio.Ejecutivos
+                .AsReadOnly()
+                .Where(e => e.Identificacion == solicitudCredito.Ejecutivo.Identificacion)
+                .FirstOrDefault();
+
+            if (ejecutivo == null)
+                throw new InvalidOperationException("Ejecutivo no pertenece al Patio donde se registra la solicitud.");
+
+            var veh = await _vehRepo.GetVehiculoByPlaca(solicitudCredito.Vehiculo.Placa);
+            if (veh == null)
+                throw new InvalidOperationException("Vehículo no válido.");
 
             solicitudCredito.Cliente = cliente;
+            solicitudCredito.Patio = patio;
+            solicitudCredito.Ejecutivo = ejecutivo;
+            solicitudCredito.Vehiculo = veh;
 
             return await _repo.GenerarSolicitud(solicitudCredito);
         }

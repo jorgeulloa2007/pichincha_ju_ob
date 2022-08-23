@@ -1,4 +1,5 @@
 ﻿using creditoautomovilistico.API.Models;
+//using creditoautomovilistico.Entities;
 using creditoautomovilistico.Entities.Enumerations;
 using creditoautomovilistico.Infrastructure.Models;
 using System;
@@ -60,24 +61,26 @@ namespace creditoautomovilistico.Test.Mocks
             };
         }
 
-        public static SolicitudCreditoPayloadModel GetMockedSolicitudCreditoPayload(string idCliente)
+        public static SolicitudCreditoPayloadModel GetMockedSolicitudCreditoPayload(string idCliente,
+            string idEjecutivo = "", string idPatio = "", string idVeh = "")
         {
             return new SolicitudCreditoPayloadModel()
             {
                 IdCliente = idCliente,
-                FechaElaboracion = System.DateTime.Now,
+                FechaElaboracion = DateTime.Now,
                 Cuotas = 6,
                 Entrada = 100,
                 Estado = TipoEstadoSolicitud.Registrada,
-                IdEjecutivo = "1234567890",
+                IdEjecutivo = idEjecutivo,
                 MesesPlazo = 6,
                 Observacion = "Observacion",
-                Patio = "Patio",
-                PlacaVehiculo = "12345678"
+                Patio = idPatio,
+                PlacaVehiculo = idVeh,
             };
         }
 
-        public static SolicitudCreditoResponseModel GetMockedSolicitudCreditoResponse(string idCliente)
+        public static SolicitudCreditoResponseModel GetMockedSolicitudCreditoResponse(string idCliente, string idPatio = "",
+            string idVeh = "", string idEjecutivo = "")
         {
             return new SolicitudCreditoResponseModel()
             {
@@ -89,13 +92,14 @@ namespace creditoautomovilistico.Test.Mocks
                 Estado = 1,
                 MesesPlazo = 6,
                 Observacion = "Observacion",
-                IdPatio = "12345678",
-                Ejecutivo =  new EjecutivoResponseModel() { Id = 1 },
-                Vehiculo = new VehiculoResponseModel { Id =  1}
+                Patio = new PatioResponseModel() {Id = 1, Nombre = idPatio },
+                Ejecutivo =  new EjecutivoResponseModel() { Id = 1, Identificacion = idEjecutivo },
+                Vehiculo = new VehiculoResponseModel { Id =  1, Placa = idVeh}
             };
         }
 
-        public static SolicitudCredito GetMockedSolicitudCreditoDbo(string idCliente)
+        public static SolicitudCredito GetMockedSolicitudCreditoDbo(string idCliente, string idPatio = "",
+            string idVeh = "", string idEjecutivo = "")
         {
             return new SolicitudCredito()
             {
@@ -106,10 +110,10 @@ namespace creditoautomovilistico.Test.Mocks
                 Estado = 1,
                 MesesPlazo = 6,
                 Observacion = "Observacion",
-                Ejecutivo = new Ejecutivo { Id = 1 },
-                Vehiculo = new Vehiculo { Id = 1 },
+                Ejecutivo = new Ejecutivo { Id = 1, Identificacion = idEjecutivo },
+                Vehiculo = new Vehiculo { Id = 1, Placa = idVeh },
                 Cliente = new Cliente { Id = 1, Identificacion = idCliente },
-                Patio =  new Patio { Id = 1 }
+                Patio =  new Patio { Id = 1, Nombre = idPatio }
             };
         }
     }

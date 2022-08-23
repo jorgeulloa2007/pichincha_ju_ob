@@ -16,7 +16,8 @@ namespace creditoautomovilistico.Test.Mocks
                 Tipo = "Tipo",
                 Cilindraje = 1,
                 Avaluo = 1,
-                MarcaId = 1
+                MarcaAuto = "KIA",
+                Year = 2020
             };
         }
 
@@ -30,7 +31,8 @@ namespace creditoautomovilistico.Test.Mocks
                 Tipo = "Tipo",
                 Cilindraje = 1,
                 Avaluo = 1,
-                MarcaId = 1
+                MarcaAuto = "KIA",
+                Year = 2020
             };
         }
 
@@ -55,7 +57,17 @@ namespace creditoautomovilistico.Test.Mocks
                 Tipo = "Tipo",
                 Cilindraje = 1,
                 Avaluo = 1,
-                MarcaId = 1
+                MarcaId = 1,
+                Year = 2020
+            };
+        }
+
+        public static Marca GetMockedMarca(string marca)
+        {
+            return new Marca()
+            {
+                Id = 1,
+                MarcaAuto = marca
             };
         }
     }

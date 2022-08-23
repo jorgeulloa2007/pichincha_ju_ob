@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace creditoautomovilistico.Entities
+namespace creditoautomovilistico.API.Models
 {
-    public class ClientePatio
+    public class ClientePatioResponseModel
     {
         public int Id { get; set; }
 
-        public Cliente Cliente { get; set; }
+        public ClienteResponseModel Cliente { get; set; }
 
         public DateTime FechaAsignacion { get; set; }
 

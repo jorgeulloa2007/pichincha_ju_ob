@@ -22,6 +22,9 @@ namespace creditoautomovilistico.API.Models
         public decimal Avaluo { get; set; }
 
         [Required]
-        public int MarcaId { get; set; }
+        public string MarcaAuto { get; set; }
+
+        [Required]
+        public int Year { get; set; }
     }
 }

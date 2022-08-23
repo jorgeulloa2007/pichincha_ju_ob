@@ -1,5 +1,4 @@
 ﻿using creditoautomovilistico.Entities.Enumerations;
-using System.Collections.Generic;
 
 namespace creditoautomovilistico.API.Models
 {

@@ -34,20 +34,36 @@ namespace creditoautomovilistico.Domain.Services
         public async Task<List<Vehiculo>> GetVehiculoByMutipleFields(VehiculoSearchModel searchParams)
         {
             return await _repo.GetVehiculosBySearchParams(searchParams);
-
         }
 
         public async Task<Vehiculo> PostVehiculo(Vehiculo vehiculo)
         {
             if (await GetVehiculo(vehiculo.Placa) != null)
-                throw new ApplicationException("No se puede ejecutar la operación.");
+                throw new InvalidOperationException("No se puede ejecutar la operación.");
 
-            return await _repo.AddVehiculo(vehiculo);
+            var marca = await _repo.GetMarcaVehByName(vehiculo.MarcaAuto);
+
+            if (marca == null)
+                throw new ArgumentOutOfRangeException("No se puede ejecutar la operación.");
+
+            return await _repo.AddVehiculo(vehiculo, marca);
         }
 
         public async Task<Vehiculo> PutVehiculo(Vehiculo vehiculo)
         {
-            return await _repo.EditVehiculo(vehiculo);
+            var vehToUpdate = await GetVehiculo(vehiculo.Placa);
+
+            if (vehToUpdate == null)
+                throw new InvalidOperationException("No se puede ejecutar la operación.");
+
+            var marca = await _repo.GetMarcaVehByName(vehiculo.MarcaAuto);
+
+            if (marca == null)
+                throw new InvalidOperationException("No se puede ejecutar la operación.");
+
+            vehiculo.Id = vehToUpdate.Id;
+
+            return await _repo.EditVehiculo(vehiculo, marca);
         }
 
         public async Task<Vehiculo> GetVehiculo(string placa)

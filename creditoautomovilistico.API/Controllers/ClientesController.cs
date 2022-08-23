@@ -28,9 +28,16 @@ namespace creditoautomovilistico.API.Controllers
         [Route("{identificacion}")]
         public IActionResult GetCliente(string identificacion)
         {
-            return Ok(Mapper.Map<ClienteResponseModel>(
-                Service.GetCliente(identificacion).Result)
-                );
+            try
+            {
+                return Ok(Mapper.Map<ClienteResponseModel>(
+                    Service.GetCliente(identificacion).Result)
+                    );
+            }
+            catch (Exception ex)
+            {
+                return Conflict(ex);
+            }
         }
 
         #endregion GET METHODS
@@ -54,9 +61,9 @@ namespace creditoautomovilistico.API.Controllers
 
                 return CreatedAtAction(nameof(GetCliente), new { identificacion = cliente.Identificacion }, cliente);
             }
-            catch (ApplicationException)
+            catch (Exception ex)
             {
-                return Conflict();
+                return Conflict(ex);
             }
         }
 
@@ -64,17 +71,37 @@ namespace creditoautomovilistico.API.Controllers
 
         #region  PUT METHODS
 
+        /// <summary>
+        /// Updates a  client
+        /// </summary>
+        /// <param name="payload">client´s data</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("update")]
         public IActionResult PutCliente([FromBody] ClientePayloadModel payload)
         {
-            return Ok(Mapper.Map<ClienteResponseModel>(
-                Service.PutCliente(Mapper.Map<Entities.Cliente>(payload)).Result)
-                );
+            try
+            {
+                return Ok(Mapper.Map<ClienteResponseModel>(
+                    Service.PutCliente(Mapper.Map<Entities.Cliente>(payload)).Result)
+                    );
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.GetType().Name == "InvalidOperationException")
+                    return BadRequest(ex.Message);
+
+                return Problem(ex.Message);
+            }
         }
 
         #endregion PUT METHODS
 
+        /// <summary>
+        /// Removes a client from DB
+        /// </summary>
+        /// <param name="identificacion">client´s id</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{identificacion}/delete")]
         public IActionResult DeleteCliente(string identificacion)
@@ -82,6 +109,11 @@ namespace creditoautomovilistico.API.Controllers
             return Ok(Service.DeleteCliente(identificacion).Result);
         }
 
+        /// <summary>
+        /// Creates a credit req
+        /// </summary>
+        /// <param name="payload">client´s data</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("solicitud")]
         public async Task<IActionResult> GenerateSolicitudCredito([FromBody] SolicitudCreditoPayloadModel payload)
@@ -92,11 +124,14 @@ namespace creditoautomovilistico.API.Controllers
                     await Service.GenerateSolicitudCredito(Mapper.Map<Entities.SolicitudCredito>(payload))
                     );
 
-                return CreatedAtAction(nameof(GetCliente), new { id = solicitud.Cliente.Identificacion }, solicitud);
+                return CreatedAtAction(nameof(GetCliente), new { identificacion = solicitud.Cliente.Identificacion }, solicitud);
             }
-            catch (ApplicationException ex)
+            catch (Exception ex)
             {
-                return Conflict(ex);
+                if (ex.GetType().Name == "InvalidOperationException")
+                    return BadRequest(ex.Message);
+
+                return Problem(ex.Message);
             }
         }
     }

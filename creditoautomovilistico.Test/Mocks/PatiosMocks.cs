@@ -1,5 +1,6 @@
 ﻿using creditoautomovilistico.API.Models;
 using creditoautomovilistico.Infrastructure.Models;
+using System.Collections.Generic;
 
 namespace creditoautomovilistico.Test.Mocks
 {
@@ -28,7 +29,7 @@ namespace creditoautomovilistico.Test.Mocks
             };
         }
 
-        public static Patio GetMockedPatioDbo(string nombre)
+        public static Patio GetMockedPatioDbo(string nombre, string ejecutivo = "")
         {
             return new Patio()
             {
@@ -37,6 +38,7 @@ namespace creditoautomovilistico.Test.Mocks
                 Telefono = "098575595",
                 Nombre = nombre,
                 NumeroPuntoVenta = 1,
+                Ejecutivos = new List<Ejecutivo>() { new Ejecutivo() { Id = 1, Identificacion = ejecutivo} }
             };
         }
     }

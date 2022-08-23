@@ -22,111 +22,89 @@ namespace creditoautomovilistico.Repository.Repositories
             _mapper = mapper;
         }
 
-        public async Task<Vehiculo> AddVehiculo(Vehiculo vehiculo)
+        public async Task<Vehiculo> AddVehiculo(Vehiculo vehiculo, Marca marca)
         {
-            if (vehiculo == null)
-                throw new ArgumentNullException(
-                                "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
                 var vehToAdd = _mapper.Map<Infrastructure.Models.Vehiculo>(vehiculo);
+
+                vehToAdd.MarcaId = marca.Id;
 
                 var vehAdded = await _context.Vehiculos.AddAsync(vehToAdd);
 
                 await _context.SaveChangesAsync();
 
-                return _mapper.Map<Vehiculo>(vehAdded.Entity);
+                var retVeh = _mapper.Map<Vehiculo>(vehAdded.Entity);
+                retVeh.MarcaAuto = marca.MarcaAuto;
 
+                return retVeh;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.",ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
-        public async Task<Vehiculo> EditVehiculo(Vehiculo vehiculo)
+        public async Task<Vehiculo> EditVehiculo(Vehiculo vehiculo, Marca marca)
         {
-            if (vehiculo == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
             try
             {
                 var vehToUpd = _mapper.Map<Infrastructure.Models.Vehiculo>(vehiculo);
+
+                vehToUpd.MarcaId = marca.Id;
 
                 var updatedVeh = _context.Vehiculos.Update(_mapper.Map<Infrastructure.Models.Vehiculo>(vehiculo));
 
                 await _context.SaveChangesAsync();
 
-                return _mapper.Map < Vehiculo > (updatedVeh);
+                var retVeh = _mapper.Map<Vehiculo>(updatedVeh.Entity);
+                retVeh.MarcaAuto = marca.MarcaAuto;
+
+                return retVeh;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<bool> HaveSolicitudesAsociadas(string placa)
         {
-            if (string.IsNullOrEmpty(placa))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                return await _context.Solicitudes.AnyAsync(v => v.Vehiculo.Placa == placa);
+                return await _context.Solicitudes.AsNoTracking().AnyAsync(v => v.Vehiculo.Placa == placa);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<Vehiculo> GetVehiculoByPlaca(string placa)
         {
-            if (string.IsNullOrEmpty(placa))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
             try
             {
-                return _mapper.Map<Vehiculo>(await _context.Vehiculos.FirstOrDefaultAsync(v => v.Placa == placa));
+                var vehDb = await _context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.Placa == placa);
+                var veh = _mapper.Map<Vehiculo>(vehDb);
+
+                if (veh != null)
+                    veh.MarcaAuto = _context.Marcas.AsNoTracking().FirstOrDefault(m => m.Id == vehDb.MarcaId)?.MarcaAuto;
+
+                return veh;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
-            }
-        }
-
-        public async Task<Vehiculo> GetVehiculoById(int? id)
-        {
-            if (id == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
-
-            try
-            {
-                return _mapper.Map<Vehiculo>(await _context.Vehiculos.FirstOrDefaultAsync(v => v.Id == id));
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<List<Vehiculo>> GetVehiculosBySearchParams(VehiculoSearchModel searchParams)
         {
-            if (searchParams == null)
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
             try
             {
-                return await _context.Vehiculos.AsNoTracking().Where(v => v.Modelo == (searchParams.Modelo ?? v.Modelo))
+                return await _context.Vehiculos
+                    .AsNoTracking()
+                    .Where(v => v.Modelo == (searchParams.Modelo ?? v.Modelo) && v.Year == (searchParams.Year ?? v.Year))
                         .Join(_context.Marcas.AsNoTracking().Where(m => m.MarcaAuto == (searchParams.Marca ?? m.MarcaAuto)), 
                                 v => v.MarcaId, m => m.Id, (v, m) => new {v, m})
                         .Select(vm => new Vehiculo()
@@ -138,24 +116,20 @@ namespace creditoautomovilistico.Repository.Repositories
                             Tipo = vm.v.Tipo,
                             Cilindraje = vm.v.Cilindraje,
                             Avaluo = vm.v.Avaluo,
-                            MarcaId = vm.v.MarcaId
+                            MarcaAuto = vm.m.MarcaAuto,
+                            Year = vm.v.Year
                         })
                         .ToListAsync();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException(
-                                "Error accediendo a datos.", ex);
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
             }
         }
 
         public async Task<bool> RemoveVehiculo(string placa)
         {
             int successfullyRemoved = 0;
-
-            if (string.IsNullOrEmpty(placa))
-                throw new ArgumentNullException(
-                               "Error de datos: Datos a actualizar no válidos.");
 
             var vehiculo = await _context.Vehiculos.Where(v => v.Placa == placa).FirstOrDefaultAsync();
 
@@ -168,11 +142,22 @@ namespace creditoautomovilistico.Repository.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw new ApplicationException(
-                                    "Error accediendo a datos.", ex);
+                    throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
                 }
             
             return successfullyRemoved > 0;
+        }
+
+        public async Task<Marca> GetMarcaVehByName(string marca)
+        {
+            try
+            {
+                return _mapper.Map<Marca>(await _context.Marcas.AsNoTracking().FirstOrDefaultAsync(v => v.MarcaAuto == marca));
+            }
+            catch (Exception ex)
+            {
+                throw new DbUpdateException("Error accediendo a datos: " + ex.Message);
+            }
         }
     }
 }

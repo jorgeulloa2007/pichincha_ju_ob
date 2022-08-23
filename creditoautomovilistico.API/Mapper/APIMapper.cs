@@ -40,13 +40,17 @@ namespace creditoautomovilistico.API.Mapper
                 .ForMember(dest => dest.Id, o => o.Ignore())
                 .ForMember(dest => dest.Patio, o => o.MapFrom(u=> new PatioPayloadModel { Nombre = u.Patio}))
                 .ForMember(dest => dest.Cliente, o => o.MapFrom(u => new ClientePayloadModel { Identificacion = u.IdCliente }))
-                .ForMember(dest => dest.Ejecutivo, o => o.MapFrom(u => new Ejecutivo { Identificacion = u.IdEjecutivo }));
+                .ForMember(dest => dest.Ejecutivo, o => o.MapFrom(u => new Ejecutivo { Identificacion = u.IdEjecutivo }))
+                .ForMember(dest => dest.Vehiculo, o => o.MapFrom(u => new Vehiculo { Placa = u.PlacaVehiculo }));
 
             CreateMap<SolicitudCredito, SolicitudCreditoResponseModel>()
                 .DisableCtorValidation();
 
             CreateMap<Ejecutivo, EjecutivoResponseModel>()
                 .DisableCtorValidation();
+
+            CreateMap<ClientePatio, ClientePatioResponseModel>()
+                 .DisableCtorValidation();
         }
     }
 }

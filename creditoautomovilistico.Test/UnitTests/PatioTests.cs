@@ -6,13 +6,8 @@ using creditoautomovilistico.Test.Mocks;
 using creditoautomovilistico.Test.UnitTests.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using nombremicroservicio.Domain.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace creditoautomovilistico.Test.UnitTests
@@ -85,7 +80,11 @@ namespace creditoautomovilistico.Test.UnitTests
             string idPatio = "12345678901";
 
             var response = PatiosMocks.GetMockedPatioDbo(idPatio);
+
             _repo.EditPatio(Arg.Any<Entities.Patio>())
+                .Returns(Mapper.Map<Entities.Patio>(response));
+
+            _repo.GetPatioByIdentificacion(idPatio)
                 .Returns(Mapper.Map<Entities.Patio>(response));
 
             var model = PatiosMocks.GetMockedPatioPayload(idPatio);

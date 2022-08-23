@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace creditoautomovilistico.Test.UnitTests.Base
 {
@@ -62,17 +57,6 @@ namespace creditoautomovilistico.Test.UnitTests.Base
             MapperConfigurationExpression mapperConfig = GetMapperConfig();
             MapperConfiguration configurationProvider = new MapperConfiguration(mapperConfig);
             return new Mapper(configurationProvider);
-        }
-
-        public TResult GetResult<TResult>(ActionResult<TResult> actionResult)
-        {
-            TResult typedResult;
-            ObjectResult objResult;
-
-            objResult = (ObjectResult)actionResult.Result;
-            typedResult = (TResult)objResult.Value;
-
-            return typedResult;
         }
     }
 }

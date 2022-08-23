@@ -14,13 +14,13 @@ namespace creditoautomovilistico.Infrastructure.Models
         public DateTime FechaElaboracion { get; set; }
 
         [Required]
-        public Cliente Cliente { get; set; }
+        public virtual Cliente? Cliente { get; set; }
 
         [Required]
-        public Patio Patio { get; set; }
+        public virtual Patio? Patio { get; set; }
 
         [Required]
-        public Vehiculo Vehiculo { get; set; }
+        public virtual Vehiculo? Vehiculo { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -37,7 +37,7 @@ namespace creditoautomovilistico.Infrastructure.Models
         public decimal Entrada { get; set; }
 
         [Required]
-        public Ejecutivo Ejecutivo { get; set; }
+        public virtual Ejecutivo? Ejecutivo { get; set; }
 
         [StringLength(500)]
         public string Observacion { get; set; }

@@ -54,9 +54,9 @@ namespace creditoautomovilistico.API.Controllers
 
                 return CreatedAtAction(nameof(GetPatio), new { identificacion = patio.Nombre }, patio);
             }
-            catch (ApplicationException)
+            catch (Exception ex)
             {
-                return Conflict();
+                return Conflict(ex);
             }
         }
 
@@ -64,6 +64,11 @@ namespace creditoautomovilistico.API.Controllers
 
         #region  PUT METHODS
 
+        /// <summary>
+        /// Updates a Patio
+        /// </summary>
+        /// <param name="payload">Patios´data</param>
+        /// <returns></returns>
         [HttpPut]
         [Route("update")]
         public IActionResult PutPatio([FromBody] PatioPayloadModel payload)
@@ -75,6 +80,11 @@ namespace creditoautomovilistico.API.Controllers
 
         #endregion PUT METHODS
 
+        /// <summary>
+        /// Removes a Patio from DB
+        /// </summary>
+        /// <param name="identificacion">name of Patio</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{identificacion}/delete")]
         public IActionResult DeletePatio(string identificacion)

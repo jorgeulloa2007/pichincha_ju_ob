@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 
-
 namespace creditoautomovilistico.API.Mapper
 {
     public class RepositoryMappingProfile : Profile
@@ -24,6 +23,14 @@ namespace creditoautomovilistico.API.Mapper
                 .ReverseMap();
 
             CreateMap<Entities.Ejecutivo, Infrastructure.Models.Ejecutivo>()
+                .DisableCtorValidation()
+                .ReverseMap();
+
+            CreateMap<Entities.Marca, Infrastructure.Models.Marca>()
+                .DisableCtorValidation()
+                .ReverseMap();
+
+            CreateMap<Entities.ClientePatio, Infrastructure.Models.ClientePatio>()
                 .DisableCtorValidation()
                 .ReverseMap();
         }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3ecb6c60-319a-40c0-b140-b1d33d2b1f45",
+		"_postman_id": "ca35b2fa-27ed-4961-a748-f88f3b12fea5",
 		"name": "creditoautomovilistico",
 		"description": "Registro de solicitudes de crédito\n\nContact Support:\n Name: Banco Pichincha\n Email: devops@pichincha.com",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -15,9 +15,16 @@
 					"item": [
 						{
 							"name": "Get Cliente by identificacion",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{baseUrl}}/Clientes/:identificacion",
 									"host": [
@@ -30,8 +37,7 @@
 									"variable": [
 										{
 											"key": "identificacion",
-											"value": "est commodo aliquip",
-											"description": "(Required) # of identificacion"
+											"value": "1701010101"
 										}
 									]
 								}
@@ -92,7 +98,7 @@
 									"variable": [
 										{
 											"key": "identificacion",
-											"value": "est commodo aliquip",
+											"value": "1701010101",
 											"description": "(Required) "
 										}
 									]
@@ -151,7 +157,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+							"raw": "{\n  \"apellidos\": \"Perez\",\n  \"direccion\": \"Mydir\",\n  \"edad\": 45,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"Juan\",\n  \"identificacionConyuge\": \"1785858585\",\n  \"nombreConyuge\": \"Bella\",\n  \"nombres\": \"Esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"099999999\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -295,7 +301,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"apellidos\": \"exercitation proident sunt eiusmod\",\n  \"direccion\": \"reprehenderit est aliqua eu\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"anim esse et non\",\n  \"identificacionConyuge\": \"velit id ex exercitation qui\",\n  \"nombreConyuge\": \"in\",\n  \"nombres\": \"esse Duis\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"exercitation\"\n}",
+							"raw": "{\n  \"apellidos\": \"Ulloa\",\n  \"direccion\": \"Direccion\",\n  \"edad\": 31481113,\n  \"estadoCivil\": 2,\n  \"identificacion\": \"Juan\",\n  \"identificacionConyuge\": \"89878765\",\n  \"nombreConyuge\": \"Ella\",\n  \"nombres\": \"Jorge\",\n  \"sujetoDeCredito\": true,\n  \"telefono\": \"098765355\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -365,7 +371,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"cuotas\": -45769277.76217232,\n  \"entrada\": 85274639.4448649,\n  \"estado\": 2,\n  \"fechaElaboracion\": \"1999-01-22T22:16:57.082Z\",\n  \"idCliente\": \"reprehenderit mollit sed non\",\n  \"idEjecutivo\": \"sint Duis\",\n  \"mesesPlazo\": -10307791,\n  \"patio\": \"adipisicing minim Lorem\",\n  \"placaVehiculo\": \"cupidatat mollit\",\n  \"observacion\": \"qui et\"\n}",
+							"raw": "{\n  \"cuotas\": 100,\n  \"entrada\": 1000,\n  \"estado\": 1,\n  \"fechaElaboracion\": \"2022-08-23T22:16:57.082Z\",\n  \"idCliente\": \"1701010102\",\n  \"idEjecutivo\": \"1601010102\",\n  \"mesesPlazo\": 20,\n  \"patio\": \"Patio2\",\n  \"placaVehiculo\": \"1234678\",\n  \"observacion\": \"qui et\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -992,7 +998,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"avaluo\": 72580084.12548581,\n  \"cilindraje\": 30315355,\n  \"marcaId\": -56905223,\n  \"modelo\": \"exercitation cupidatat amet aliqua\",\n  \"nroChasis\": \"labore consectetur\",\n  \"placa\": \"sed eu\",\n  \"tipo\": \"et qui\"\n}",
+							"raw": "{\n  \"avaluo\": 100,\n  \"cilindraje\": 200,\n  \"marcaAuto\": \"KIA\",\n  \"modelo\": \"Model2\",\n  \"nroChasis\": \"100100\",\n  \"placa\": \"200201\",\n  \"tipo\": \"Tipo2\",\n  \"year\": 2022\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1195,6 +1201,26 @@
 					]
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
